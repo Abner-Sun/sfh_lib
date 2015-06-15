@@ -1,0 +1,1 @@
+src/test_main.oo src/test_main.dd src/test_main.loo: src/test_main.cpp src/sfh_string.h
