@@ -180,3 +180,92 @@ bool isPalindrome(const char *str)
 	}
 	return true;
 }
+
+//5
+int _MinPi(int *P, int maxPos, int i)
+{
+	if P[maxPos * 2 - i] < (maxPos + P[maxPos] -i))
+		return P[maxPos * 2 - i];
+	else 
+		return (maxPos + P[i] -i);
+}
+int PalindromeOddLen(const char *str, int pos, int offset, int strLen)
+{
+	for(; pos + offset < strLen; ++offset)
+	{
+		if(str[pos + offset] != str[pos - offset])
+			break;
+	}
+		return offset -1;
+}
+void LongestSubPalindrome(const char *str, char *result)
+{
+	int tempStrLen = (strlen(str)*2 + 2);
+	char *tempStr = (char *)malloc(sizeof(char) * tempStrLen);
+	std::Vector<int> P(tempStrLen);
+	tempStr[0] = '$';
+	P[0] = 0;
+	P[1] = 1;
+	P[2] = 2;
+
+	int maxPos = 2;
+	int maxSub = 2;
+
+	//init tempStr
+	int i, j;
+	for(i = 1, j = 0; i < tempStrLen - 1; ++i, ++j)
+	{
+		tempStr[i] = '#';
+		++i;
+		tempStr[i] = str[j];
+	}
+	tempStr[i] = '#'; 
+
+	//find max subPalindrome
+	for(i =3 ;i < tempStrLen; ++i)
+	{
+		int offset = _MinPi(P, maxPos, i);
+		P[i] = PalindromeOddLen(tempStr, i, offset, tempStrLen);
+		if (P[i] >=P[maxPos])
+		{
+			maxPos = i;
+			maxSub = P[i];
+		}
+	}
+
+	printf("%d\n", P[maxPos]-1);
+}
+
+//6 allPermutation
+int isCanPromotedPos(char *str, int pos)
+{
+	int finalPos  = -1;
+	for(int i = pos+1; i < strlen(str); ++i)
+		if(str[pos] < str[i])
+			finalPos = i;
+	return finalPos;
+}
+bool _NextPermutation(char *str)
+{
+	int min = 0;
+	int tmp;
+	bool ret = false;
+	for(int i = 0; i < strlen(str); ++i)
+	{
+		if((tmp = isCanPromotedPos(str ,i)) != -1)
+		{
+			min = i;
+			ret = true;
+		}
+	}
+	if(tmp >0)
+		swap(&str[tmp], &str[min]);
+	return ret;
+}
+void AllPermutation(char * str)
+{
+	if(str == NULL)
+		return;
+	while(_NextPermutation)
+		printf("%s\n", str);
+}
